@@ -53,9 +53,12 @@ ssh debian@<JUMPBOX_PUBLIC_IP>
 
 **2. Prepare Kubespray:**
 ```bash
+
+
 sudo apt-get update && sudo apt-get install -y git python3 python3-pip python3-venv
-git clone [https://github.com/kubernetes-sigs/kubespray.git](https://github.com/kubernetes-sigs/kubespray.git)
+git clone https://github.com/kubernetes-sigs/kubespray.git
 cd kubespray
+# git checkout release-2.24  # Or whichever is the latest stable release
 git checkout master
 git pull origin master
 python3 -m venv venv
