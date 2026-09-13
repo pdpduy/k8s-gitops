@@ -11,6 +11,11 @@ spec:
     chart: kube-prometheus-stack
     helm:
       values: |
+        # 1. Disable Alertmanager to save RAM
+        alertmanager:
+          enabled: false
+        
+        # 2. Configure Grafana Ingress
         grafana:
           adminPassword: "admin"
           ingress:
@@ -18,12 +23,19 @@ spec:
             ingressClassName: nginx
             hosts:
               - grafana.lab.local
+              
+        # 3. Configure Prometheus Ingress & Lower Memory Requirements
         prometheus:
           ingress:
             enabled: true
             ingressClassName: nginx
             hosts:
               - prometheus.lab.local
+          prometheusSpec:
+            resources:
+              requests:
+                cpu: 50m
+                memory: 256Mi
   destination:
     server: 'https://kubernetes.default.svc'
     namespace: monitoring
