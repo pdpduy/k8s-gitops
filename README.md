@@ -77,9 +77,9 @@ ansible-playbook -i inventory/mycluster/inventory.ini --become --become-user=roo
 
 **5. Configure `kubectl` on the Jumpbox:**
 ```bash
-curl -LO "[https://dl.k8s.io/release/$(curl](https://dl.k8s.io/release/$(curl) -L -s [https://dl.k8s.io/release/stable.txt)/bin/linux/amd64/kubectl](https://dl.k8s.io/release/stable.txt)/bin/linux/amd64/kubectl)"
+curl -LO "https://dl.k8s.io/release/$(curl -L -s https://dl.k8s.io/release/stable.txt)/bin/linux/amd64/kubectl"
 chmod +x kubectl
-sudo mv kubectl /usr/local/bin/
+mv kubectl /usr/local/bin/
 
 mkdir -p ~/.kube
 sudo scp root@10.240.0.11:/etc/kubernetes/admin.conf ~/.kube/config
