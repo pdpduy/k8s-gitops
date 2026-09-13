@@ -8,7 +8,7 @@ spec:
   source:
     repoURL: 'https://github.com/pdpduy/k8s-gitops.git' # UPDATE THIS!
     targetRevision: main
-    path: argocd-apps
+    path: gitops/argocd-apps
   destination:
     server: 'https://kubernetes.default.svc'
     namespace: argocd
