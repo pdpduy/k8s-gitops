@@ -1,0 +1,20 @@
+# Copy this file to terraform.tfvars and adjust as needed.
+
+resource_group_name = "kubeadm-lab-rg"
+location            = "southeastasia"
+admin_username      = "debian"
+ssh_public_key_path = "~/.ssh/id_rsa.pub"
+domain_suffix       = "kubernetes.local"
+
+# K8s Ingress Load Balancer Settings
+lb_name                = "kubeadm-lb"
+ingress_http_nodeport  = 31529
+ingress_https_nodeport = 32264
+
+# Machine Layout
+machines = {
+  jumpbox = { size = "Standard_B2s",  private_ip = "10.240.0.10", public_ip = true }
+  server  = { size = "Standard_B2s",  private_ip = "10.240.0.11", public_ip = false }
+  "node-0" = { size = "Standard_B1ms", private_ip = "10.240.0.20", public_ip = false }
+  "node-1" = { size = "Standard_B1ms", private_ip = "10.240.0.21", public_ip = false }
+}

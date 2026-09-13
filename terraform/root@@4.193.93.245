@@ -1,0 +1,18 @@
+[all]
+                node-0 ansible_host=10.240.0.20 ip=10.240.0.20
+            node-1 ansible_host=10.240.0.21 ip=10.240.0.21
+            server ansible_host=10.240.0.11 ip=10.240.0.11
+    
+[kube_control_plane]
+server
+
+[etcd]
+server
+
+[kube_node]
+                node-0
+            node-1
+            
+[k8s_cluster:children]
+kube_control_plane
+kube_node
