@@ -57,6 +57,7 @@ sudo apt-get update && sudo apt-get install -y git python3 python3-pip python3-v
 git clone [https://github.com/kubernetes-sigs/kubespray.git](https://github.com/kubernetes-sigs/kubespray.git)
 cd kubespray
 git checkout master
+git pull origin master
 python3 -m venv venv
 source venv/bin/activate
 pip install -r requirements.txt
@@ -84,6 +85,13 @@ mkdir -p ~/.kube
 sudo scp root@10.240.0.11:/etc/kubernetes/admin.conf ~/.kube/config
 sudo chown $(id -u):$(id -g) ~/.kube/config
 sed -i 's/127.0.0.1/10.240.0.11/g' ~/.kube/config
+
+# quality-of-life: k alias + completion
+echo "alias k=kubectl" >> ~/.bashrc
+echo 'source <(kubectl completion bash)' >> ~/.bashrc
+echo 'complete -o default -F __start_kubectl k' >> ~/.bashrc
+source ~/.bashrc
+
 kubectl get nodes
 ```
 
