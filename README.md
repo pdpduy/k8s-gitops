@@ -109,7 +109,7 @@ Push your `gitops/` folder (containing your ArgoCD apps) to a public GitHub repo
 Run this on your jumpbox to install the GitOps controller:
 ```bash
 kubectl create namespace argocd
-kubectl apply -n argocd -f [https://raw.githubusercontent.com/argoproj/argo-cd/stable/manifests/install.yaml](https://raw.githubusercontent.com/argoproj/argo-cd/stable/manifests/install.yaml)
+kubectl apply -n argocd -f https://raw.githubusercontent.com/argoproj/argo-cd/stable/manifests/install.yaml
 ```
 
 **3. Apply the Root App:**
@@ -119,6 +119,12 @@ kubectl apply -f root-app.yaml
 ```
 
 ArgoCD will now automatically sync your cluster, installing NGINX Ingress, Local Path Provisioner, and the Prometheus/Grafana stack!
+
+**4. Retrieve the ArgoCD Admin Password:**
+Run this command on your jumpbox to extract the automatically generated admin password:
+```bash
+kubectl -n argocd get secret argocd-initial-admin-secret -o jsonpath="{.data.password}" | base64 -d; echo
+```
 
 ---
 
