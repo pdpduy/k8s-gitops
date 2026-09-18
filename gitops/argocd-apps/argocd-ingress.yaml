@@ -4,10 +4,14 @@ metadata:
   name: argocd-ingress
   namespace: argocd
   annotations:
-    # ArgoCD uses HTTPS internally, so we must tell NGINX to use HTTPS to talk to it
     nginx.ingress.kubernetes.io/backend-protocol: "HTTPS"
+    cert-manager.io/cluster-issuer: "selfsigned-issuer" # Triggers cert generation
 spec:
   ingressClassName: nginx
+  tls:
+  - hosts:
+    - argocd.lab.local
+    secretName: argocd-tls-cert
   rules:
   - host: argocd.lab.local
     http:
