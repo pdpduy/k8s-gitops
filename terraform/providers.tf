@@ -9,6 +9,10 @@ terraform {
       source  = "hashicorp/local"
       version = "~> 2.0"
     }
+    cloudflare = {
+      source  = "cloudflare/cloudflare"
+      version = "~> 4.0"
+    }
   }
 }
 
@@ -22,4 +26,8 @@ provider "azurerm" {
     "Microsoft.Compute",
     "Microsoft.Network"
   ]
+}
+
+provider "cloudflare" {
+  api_token = var.cloudflare_api_token
 }

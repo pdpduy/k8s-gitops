@@ -20,8 +20,6 @@ spec:
           ingress:
             enabled: true
             ingressClassName: nginx
-            annotations:
-              external-dns.alpha.kubernetes.io/hostname: "grafana.lab.nexusworkspace.cloud"
             hosts:
               - grafana.lab.nexusworkspace.cloud
           resources:
@@ -47,8 +45,6 @@ spec:
           ingress:
             enabled: true
             ingressClassName: nginx
-            annotations:
-              external-dns.alpha.kubernetes.io/hostname: "prometheus.lab.nexusworkspace.cloud"
             hosts:
               - prometheus.lab.nexusworkspace.cloud
           prometheusSpec:

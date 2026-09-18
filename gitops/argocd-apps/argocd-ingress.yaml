@@ -6,16 +6,14 @@ metadata:
   annotations:
     # ArgoCD uses HTTPS internally, so we must tell NGINX to use HTTPS to talk to it
     nginx.ingress.kubernetes.io/backend-protocol: "HTTPS"
-    # Tells External-DNS to create an A record for this exact hostname
-    external-dns.alpha.kubernetes.io/hostname: "argocd.lab.nexusworkspace.cloud"
 spec:
   ingressClassName: nginx
   tls:
   - hosts:
-    - argocd.lab.local
+    - argocd.lab.nexusworkspace.cloud
     secretName: argocd-tls-cert
   rules:
-  - host: argocd.lab.local
+  - host: argocd.lab.nexusworkspace.cloud
     http:
       paths:
       - path: /

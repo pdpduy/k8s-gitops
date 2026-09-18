@@ -67,3 +67,14 @@ variable "ingress_https_nodeport" {
   type    = number
   default = 32264
 }
+
+variable "cloudflare_api_token" {
+  description = "API Token for Cloudflare"
+  type        = string
+  sensitive   = true
+}
+
+variable "cloudflare_zone_id" {
+  description = "The Zone ID of your domain in Cloudflare (found on the overview page)"
+  type        = string
+}
