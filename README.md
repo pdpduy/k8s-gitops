@@ -85,8 +85,8 @@ chmod +x kubectl
 mv kubectl /usr/local/bin/
 
 mkdir -p ~/.kube
-sudo scp root@10.240.0.11:/etc/kubernetes/admin.conf ~/.kube/config
-sudo chown $(id -u):$(id -g) ~/.kube/config
+scp root@10.240.0.11:/etc/kubernetes/admin.conf ~/.kube/config
+chown $(id -u):$(id -g) ~/.kube/config
 sed -i 's/127.0.0.1/10.240.0.11/g' ~/.kube/config
 
 # quality-of-life: k alias + completion
@@ -109,13 +109,14 @@ Push your `gitops/` folder (containing your ArgoCD apps) to a public GitHub repo
 Run this on your jumpbox to install the GitOps controller:
 ```bash
 kubectl create namespace argocd
-kubectl apply -n argocd -f https://raw.githubusercontent.com/argoproj/argo-cd/stable/manifests/install.yaml
+kubectl apply -n argocd --server-side --force-conflicts -f https://raw.githubusercontent.com/argoproj/argo-cd/stable/manifests/install.yaml
 ```
 
 **3. Apply the Root App:**
 Update the `repoURL` in your local `root-app.yaml` to point to your new GitHub repository, then apply it:
 ```bash
-kubectl apply -f root-app.yaml
+git clone https://github.com/pdpduy/k8s-gitops.git
+kubectl apply -f k8s-gitops/gitops/root-app.yaml
 ```
 
 ArgoCD will now automatically sync your cluster, installing NGINX Ingress, Local Path Provisioner, and the Prometheus/Grafana stack!
