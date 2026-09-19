@@ -7,6 +7,7 @@ metadata:
     # ArgoCD uses HTTPS internally, so we must tell NGINX to use HTTPS to talk to it
     nginx.ingress.kubernetes.io/backend-protocol: "HTTPS"
     cert-manager.io/cluster-issuer: "letsencrypt-prod"
+    nginx.ingress.kubernetes.io/ssl-redirect: "true"
 spec:
   ingressClassName: nginx
   tls:

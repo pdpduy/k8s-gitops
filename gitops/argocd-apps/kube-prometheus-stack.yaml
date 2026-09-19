@@ -22,8 +22,13 @@ spec:
             ingressClassName: nginx
             annotations:
               cert-manager.io/cluster-issuer: "letsencrypt-prod"
+              nginx.ingress.kubernetes.io/ssl-redirect: "true"
             hosts:
               - grafana.lab.nexusworkspace.cloud
+            tls:
+              - secretName: grafana-tls-cert
+                hosts:
+                  - grafana.lab.nexusworkspace.cloud
           resources:
             requests:
               cpu: 10m
@@ -49,8 +54,13 @@ spec:
             ingressClassName: nginx
             annotations:
               cert-manager.io/cluster-issuer: "letsencrypt-prod"
+              nginx.ingress.kubernetes.io/ssl-redirect: "true"
             hosts:
               - prometheus.lab.nexusworkspace.cloud
+            tls:
+              - secretName: prometheus-tls-cert
+                hosts:
+                  - prometheus.lab.nexusworkspace.cloud
           prometheusSpec:
             resources:
               requests:
