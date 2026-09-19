@@ -20,6 +20,8 @@ spec:
           ingress:
             enabled: true
             ingressClassName: nginx
+            annotations:
+              cert-manager.io/cluster-issuer: "letsencrypt-prod"
             hosts:
               - grafana.lab.nexusworkspace.cloud
           resources:
@@ -45,6 +47,8 @@ spec:
           ingress:
             enabled: true
             ingressClassName: nginx
+            annotations:
+              cert-manager.io/cluster-issuer: "letsencrypt-prod"
             hosts:
               - prometheus.lab.nexusworkspace.cloud
           prometheusSpec:
