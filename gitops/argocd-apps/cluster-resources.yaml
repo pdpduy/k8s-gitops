@@ -1,0 +1,24 @@
+apiVersion: argoproj.io/v1alpha1
+kind: Application
+metadata:
+  name: cluster-resources
+  namespace: argocd
+spec:
+  project: default
+  source:
+    repoURL: 'https://github.com/pdpduy/k8s-gitops.git'
+    targetRevision: main
+    path: gitops/cluster-resources
+  destination:
+    server: 'https://kubernetes.default.svc'
+    namespace: cert-manager
+  syncPolicy:
+    automated:
+      prune: true
+      selfHeal: true
+    retry:
+      limit: 5 # Retries 5 times if CRDs are not ready yet
+      backoff:
+        duration: 5s
+        factor: 2
+        maxDuration: 1m
