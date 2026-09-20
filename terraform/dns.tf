@@ -1,5 +1,5 @@
 locals {
-  dns_records = ["argocd.lab", "grafana.lab", "prometheus.lab", "alertmanager.lab"]
+  dns_records = ["argocd.lab", "grafana.lab", "prometheus.lab", "alertmanager.lab", "keycloak.lab"]
 }
 
 resource "cloudflare_dns_record" "ingress_records" {

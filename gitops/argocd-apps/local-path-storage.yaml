@@ -9,6 +9,10 @@ spec:
     repoURL: 'https://github.com/rancher/local-path-provisioner.git'
     targetRevision: master
     path: deploy
+    helm:
+      values: |
+        storageClass:
+          defaultClass: true
   destination:
     server: 'https://kubernetes.default.svc'
     namespace: local-path-storage
