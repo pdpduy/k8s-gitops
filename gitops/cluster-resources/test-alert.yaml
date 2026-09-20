@@ -1,0 +1,21 @@
+apiVersion: monitoring.coreos.com/v1
+kind: PrometheusRule
+metadata:
+  name: manual-test-alert
+  namespace: monitoring
+  labels:
+    # The Operator requires this label to know this rule belongs to our stack
+    release: kube-prometheus-stack 
+spec:
+  groups:
+  - name: custom-test-rules
+    rules:
+    - alert: ManualTestAlert
+      expr: vector(1) > 0
+      for: 1m
+      labels:
+        severity: warning
+        team: lab-admin
+      annotations:
+        summary: "Manual GitOps Test Alert"
+        description: "If you are seeing this, the Prometheus-to-Alertmanager pipeline is working perfectly!"
