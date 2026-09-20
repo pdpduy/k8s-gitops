@@ -38,6 +38,8 @@ terraform apply
 Terraform will output a generated `inventory.ini`. Transfer this to your jumpbox:
 ```bash
 scp ./inventory.ini debian@<JUMPBOX_PUBLIC_IP>:~/
+
+scp ./inventory.ini root@jumpbox.lab.nexusworkspace.cloud:~/
 ```
 
 ---
@@ -49,13 +51,15 @@ Log into your jumpbox to orchestrate the cluster installation. Kubespray will SS
 **1. SSH into the Jumpbox:**
 ```bash
 ssh debian@<JUMPBOX_PUBLIC_IP>
+
+ssh root@root@jumpbox.lab.nexusworkspace.cloud
 ```
 
 **2. Prepare Kubespray:**
 ```bash
 
 
-sudo apt-get update && sudo apt-get install -y git python3 python3-pip python3-venv
+apt-get update && sudo apt-get install -y git python3 python3-pip python3-venv
 git clone https://github.com/kubernetes-sigs/kubespray.git
 cd kubespray
 # git checkout release-2.24  # Or whichever is the latest stable release
