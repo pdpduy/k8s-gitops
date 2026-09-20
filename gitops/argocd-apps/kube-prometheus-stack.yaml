@@ -12,24 +12,24 @@ spec:
     helm:
       values: |
         alertmanager:
-      enabled: true
-      ingress:
-        enabled: true
-        ingressClassName: nginx
-        annotations:
-          cert-manager.io/cluster-issuer: "letsencrypt-prod"
-          nginx.ingress.kubernetes.io/ssl-redirect: "true"
-        hosts:
-          - alertmanager.lab.nexusworkspace.cloud
-        tls:
-          - secretName: alertmanager-tls-cert
+          enabled: true
+          ingress:
+            enabled: true
+            ingressClassName: nginx
+            annotations:
+              cert-manager.io/cluster-issuer: "letsencrypt-prod"
+              nginx.ingress.kubernetes.io/ssl-redirect: "true"
             hosts:
               - alertmanager.lab.nexusworkspace.cloud
-      alertmanagerSpec:
-        resources:
-          requests:
-            cpu: 10m
-            memory: 32Mi
+            tls:
+              - secretName: alertmanager-tls-cert
+                hosts:
+                  - alertmanager.lab.nexusworkspace.cloud
+          alertmanagerSpec:
+            resources:
+              requests:
+                cpu: 10m
+                memory: 32Mi
         
         # Shrink Grafana
         grafana:
