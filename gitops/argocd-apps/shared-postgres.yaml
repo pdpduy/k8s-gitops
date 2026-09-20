@@ -4,18 +4,17 @@ metadata:
   name: shared-postgres
   namespace: argocd
 spec:
-  project: default
   source:
-    repoURL: 'https://charts.bitnami.com/bitnami'
-    targetRevision: 16.7.26
-    chart: postgresql
     helm:
       values: |
+        global:
+          security:
+            allowInsecureImages: true
         image:
           registry: public.ecr.aws
           repository: bitnami/postgresql
         auth:
-          postgresPassword: supersecretadmin # Use this to create new DBs for other apps later
+          postgresPassword: supersecretadmin
           username: keycloak
           password: keycloakpassword
           database: keycloak
