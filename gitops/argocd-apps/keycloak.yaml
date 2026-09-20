@@ -11,12 +11,22 @@ spec:
     chart: keycloak
     helm:
       values: |
+        # Bitnami moved versioned images from docker.io/bitnami to docker.io/bitnamilegacy.
+        # The chart refuses non-default image repos unless this is set.
+        global:
+          security:
+            allowInsecureImages: true
+        image:
+          repository: bitnamilegacy/keycloak
         auth:
           adminUser: admin
           adminPassword: adminpassword
         postgresql:
           image:
-            tag: 16.4.0-debian-12-r0
+            repository: bitnamilegacy/postgresql
+            # r0 doesn't exist; r14 is a known-good tag in bitnamilegacy.
+            # Or delete this tag line to use the chart's default (Postgres 17.x, fresh installs only).
+            tag: 16.4.0-debian-12-r14
         production: true
         proxyHeaders: xforwarded
         ingress:
