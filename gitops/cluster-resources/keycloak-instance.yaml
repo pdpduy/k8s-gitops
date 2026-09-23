@@ -47,6 +47,9 @@ spec:
           image: quay.io/keycloak/keycloak:26.1.0
           args: ["start"]
           env:
+            # Tell Keycloak to accept HTTP traffic from the Ingress
+            - name: KC_HTTP_ENABLED
+              value: "true"
             - name: KC_HOSTNAME
               value: "keycloak.lab.nexusworkspace.cloud"
             - name: KC_DB
