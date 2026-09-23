@@ -6,9 +6,9 @@ metadata:
 spec:
   project: default
   source:
-    repoURL: 'https://github.com/keycloak/keycloak-k8s-resources.git'
-    targetRevision: 25.0.0
-    path: kubernetes/cluster-wide
+    repoURL: 'https://github.com/pdpduy/k8s-gitops.git'
+    targetRevision: main
+    path: gitops/operators/keycloak-operator
   destination:
     server: 'https://kubernetes.default.svc'
     namespace: keycloak-system
