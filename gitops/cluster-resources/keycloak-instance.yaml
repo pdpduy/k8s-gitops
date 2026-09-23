@@ -16,16 +16,31 @@ spec:
   dnsNames:
     - keycloak.lab.nexusworkspace.cloud
 ---
-apiVersion: v1
-kind: Secret
+apiVersion: external-secrets.io/v1beta1
+kind: ExternalSecret
 metadata:
-  name: keycloak-db-secret
+  name: keycloak-db-credentials
   namespace: iam
-stringData:
-  username: keycloak
-  password: keycloakpassword
-  admin-username: admin
-  admin-password: adminpassword
+spec:
+  refreshInterval: 1h
+  secretStoreRef:
+    kind: ClusterSecretStore
+    name: azure-kv
+  target:
+    name: keycloak-db-secret # This creates the actual Secret Keycloak mounts
+    template:
+      data:
+        username: "keycloak"
+        admin-username: "admin"
+        password: "{{ .dbpassword }}"
+        admin-password: "{{ .adminpassword }}"
+  data:
+    - secretKey: dbpassword
+      remoteRef:
+        key: keycloak-db-password
+    - secretKey: adminpassword
+      remoteRef:
+        key: keycloak-admin-password
 ---
 apiVersion: apps/v1
 kind: Deployment
