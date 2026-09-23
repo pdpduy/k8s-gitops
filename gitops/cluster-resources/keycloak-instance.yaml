@@ -16,8 +16,8 @@ spec:
   instances: 1
   db:
     vendor: postgres
-    # Routes traffic to the shared postgres service in the database namespace
-    host: "shared-postgres-postgresql.database.svc.cluster.local"
+    # Updated host service to match Percona PostgreSQL Operator endpoint
+    host: "shared-postgres-pgbouncer.database.svc.cluster.local"
     usernameSecret:
       name: keycloak-db-secret
       key: username

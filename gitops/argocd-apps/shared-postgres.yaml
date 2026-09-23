@@ -6,26 +6,25 @@ metadata:
 spec:
   project: default
   source:
-    repoURL: 'https://charts.bitnami.com/bitnami'
-    chart: postgresql
-    targetRevision: 14.0.0
+    repoURL: 'https://github.com/spron-in/percona-helm-charts.git'
+    targetRevision: main
+    path: charts/pg-db
     helm:
       values: |
-        global:
-          security:
-            allowInsecureImages: true
-        image:
-          registry: docker.io
-          repository: bitnami/postgresql
-        auth:
-          postgresPassword: supersecretadmin
-          username: keycloak
-          password: keycloakpassword
-          database: keycloak
-        primary:
-          persistence:
-            enabled: true
-            storageClass: local-path
+        users:
+          - name: keycloak
+            databases:
+              - keycloak
+        instances:
+          - name: instance1
+            replicas: 1
+            dataVolumeClaimSpec:
+              storageClassName: local-path
+              accessModes:
+                - ReadWriteOnce
+              resources:
+                requests:
+                  storage: 2Gi
   destination:
     server: 'https://kubernetes.default.svc'
     namespace: database
