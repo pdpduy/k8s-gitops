@@ -25,6 +25,18 @@ spec:
               resources:
                 requests:
                   storage: 2Gi
+        backups:
+          pgbackrest:
+            repos:
+              - name: repo1
+                volume:
+                  volumeClaimSpec:
+                    storageClassName: local-path
+                    accessModes:
+                      - ReadWriteOnce
+                    resources:
+                      requests:
+                        storage: 1Gi
   destination:
     server: 'https://kubernetes.default.svc'
     namespace: database
