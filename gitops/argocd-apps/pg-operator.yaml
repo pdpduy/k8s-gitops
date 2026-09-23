@@ -9,6 +9,9 @@ spec:
     repoURL: 'https://github.com/spron-in/percona-helm-charts.git'
     targetRevision: main
     path: charts/pg-operator
+    helm:
+      values: |
+        watchNamespace: "*"
   destination:
     server: 'https://kubernetes.default.svc'
     namespace: postgres-operator
