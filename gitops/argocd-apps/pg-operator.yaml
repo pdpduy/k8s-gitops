@@ -11,7 +11,7 @@ spec:
     path: charts/pg-operator
     helm:
       values: |
-        watchNamespace: "*"
+        watchNamespace: ""
   destination:
     server: 'https://kubernetes.default.svc'
     namespace: postgres-operator
