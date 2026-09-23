@@ -8,7 +8,7 @@ spec:
   source:
     repoURL: 'https://charts.bitnami.com/bitnami'
     chart: postgresql
-    targetRevision: 12.12.10 # Or your preferred chart version
+    targetRevision: 14.0.0
     helm:
       values: |
         global:
@@ -22,6 +22,10 @@ spec:
           username: keycloak
           password: keycloakpassword
           database: keycloak
+        primary:
+          persistence:
+            enabled: true
+            storageClass: local-path
   destination:
     server: 'https://kubernetes.default.svc'
     namespace: database
