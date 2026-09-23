@@ -1,9 +1,12 @@
 apiVersion: kustomize.config.k8s.io/v1beta1
 kind: Kustomization
 
+namespace: keycloak-system
+
 resources:
-  # Removed cluster-wide from the URL since it doesn't exist in 25.0.0
-  - https://github.com/keycloak/keycloak-k8s-resources//kubernetes?ref=25.0.0
+  - https://raw.githubusercontent.com/keycloak/keycloak-k8s-resources/25.0.0/kubernetes/keycloaks.k8s.keycloak.org-v1.yml
+  - https://raw.githubusercontent.com/keycloak/keycloak-k8s-resources/25.0.0/kubernetes/keycloakrealmimports.k8s.keycloak.org-v1.yml
+  - https://raw.githubusercontent.com/keycloak/keycloak-k8s-resources/25.0.0/kubernetes/kubernetes.yml
 
 patches:
   # 1. Update the Operator to watch all namespaces
