@@ -15,6 +15,7 @@ spec:
           - name: keycloak
             databases:
               - keycloak
+            secretName: keycloak-db-secret
         instances:
           - name: instance1
             replicas: 1
