@@ -2,12 +2,16 @@ apiVersion: v1
 kind: Namespace
 metadata:
   name: iam
+  annotations:
+    argocd.argoproj.io/sync-wave: "0"
 ---
 apiVersion: cert-manager.io/v1
 kind: Certificate
 metadata:
   name: keycloak-tls-cert
   namespace: iam
+  annotations:
+    argocd.argoproj.io/sync-wave: "1"
 spec:
   secretName: keycloak-tls-cert
   issuerRef:
@@ -21,6 +25,8 @@ kind: ExternalSecret
 metadata:
   name: keycloak-db-credentials
   namespace: iam
+  annotations:
+    argocd.argoproj.io/sync-wave: "1"
 spec:
   refreshInterval: 1h
   secretStoreRef:
@@ -47,6 +53,8 @@ kind: Deployment
 metadata:
   name: keycloak
   namespace: iam
+  annotations:
+    argocd.argoproj.io/sync-wave: "2"
 spec:
   replicas: 1
   selector:
@@ -66,11 +74,15 @@ spec:
             - name: KC_HTTP_ENABLED
               value: "true"
             - name: KC_HOSTNAME
-              value: "keycloak.lab.nexusworkspace.cloud"
+              value: "https://keycloak.lab.nexusworkspace.cloud"
+            - name: KC_HOSTNAME_STRICT
+              value: "false"
+            - name: KC_HEALTH_ENABLED
+              value: "true"
             - name: KC_DB
               value: "postgres"
             - name: KC_DB_URL
-              value: "jdbc:postgresql://shared-postgres-pg-db-pgbouncer.database.svc.cluster.local:5432/keycloak"
+              value: "jdbc:postgresql://shared-postgres-pg-db-ha.database.svc.cluster.local:5432/keycloak"
             - name: KC_DB_USERNAME
               valueFrom:
                 secretKeyRef:
@@ -94,13 +106,37 @@ spec:
                   name: keycloak-db-secret
                   key: admin-password
           ports:
-            - containerPort: 8080
+            - name: http
+              containerPort: 8080
+            - name: management
+              containerPort: 9000
+          resources:
+            requests:
+              cpu: 250m
+              memory: 768Mi
+            limits:
+              cpu: 1000m
+              memory: 1536Mi
+          readinessProbe:
+            httpGet:
+              path: /health/ready
+              port: 9000
+            initialDelaySeconds: 40
+            periodSeconds: 10
+          livenessProbe:
+            httpGet:
+              path: /health/live
+              port: 9000
+            initialDelaySeconds: 60
+            periodSeconds: 15
 ---
 apiVersion: v1
 kind: Service
 metadata:
   name: keycloak
   namespace: iam
+  annotations:
+    argocd.argoproj.io/sync-wave: "2"
 spec:
   ports:
     - port: 8080
@@ -115,6 +151,7 @@ metadata:
   namespace: iam
   annotations:
     nginx.ingress.kubernetes.io/proxy-buffer-size: "128k"
+    argocd.argoproj.io/sync-wave: "3"
 spec:
   ingressClassName: nginx
   tls:
