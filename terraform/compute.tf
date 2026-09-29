@@ -78,7 +78,7 @@ resource "local_file" "ansible_inventory" {
     kube_node
 
     [k8s_cluster:vars]
-    upstream_dns_servers=["8.8.8.8", "1.1.1.1"]
+    upstream_dns_servers=["168.63.129.16"]
     resolvconf_mode=none
   EOT
 }
@@ -88,10 +88,10 @@ resource "local_file" "kubespray_extra_vars" {
   filename = "${path.module}/extra-vars.yml"
   content  = <<-EOT
     ---
-    # Explicit upstream DNS servers prevent CoreDNS CrashLoopBackOff from host loopback detection
+    # Azure WireServer IP (168.63.129.16) is Azure's internal recursive DNS resolver.
+    # It resolves public and private DNS without requiring outbound public internet UDP routing.
     upstream_dns_servers:
-      - 8.8.8.8
-      - 1.1.1.1
+      - 168.63.129.16
 
     # Disable Kubespray host resolvconf management to avoid host <-> DNS forwarding loops
     resolvconf_mode: none
