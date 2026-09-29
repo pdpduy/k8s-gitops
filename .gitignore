@@ -27,3 +27,6 @@ override.tf.json
 
 # Ignore generated root files
 root@*
+
+# AI Assistant Rules
+GEMINI.md
