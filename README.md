@@ -34,12 +34,12 @@ terraform init
 terraform apply
 ```
 
-**2. Copy the Inventory:**
-Terraform will output a generated `inventory.ini`. Transfer this to your jumpbox:
+**2. Copy the Inventory and Cluster Config:**
+Terraform will output a generated `inventory.ini` and `extra-vars.yml`. Transfer them to your jumpbox:
 ```bash
-scp ./inventory.ini debian@<JUMPBOX_PUBLIC_IP>:~/
+scp ./inventory.ini ./extra-vars.yml debian@<JUMPBOX_PUBLIC_IP>:~/
 
-scp ./inventory.ini root@jumpbox.lab.nexusworkspace.cloud:~/
+scp ./inventory.ini ./extra-vars.yml root@jumpbox.lab.nexusworkspace.cloud:~/
 ```
 
 ---
@@ -78,7 +78,7 @@ cp ~/inventory.ini inventory/mycluster/inventory.ini
 
 **4. Build the Cluster:**
 ```bash
-ansible-playbook -i inventory/mycluster/inventory.ini --become --become-user=root cluster.yml
+ansible-playbook -i inventory/mycluster/inventory.ini -e @~/extra-vars.yml --become --become-user=root cluster.yml
 ```
 *(Grab a coffee, this takes 10-15 minutes).*
 

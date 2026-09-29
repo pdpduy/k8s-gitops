@@ -76,5 +76,24 @@ resource "local_file" "ansible_inventory" {
     [k8s_cluster:children]
     kube_control_plane
     kube_node
+
+    [k8s_cluster:vars]
+    upstream_dns_servers=["8.8.8.8", "1.1.1.1"]
+    resolvconf_mode=none
+  EOT
+}
+
+# Auto-generates the Kubespray extra-vars file to prevent CoreDNS loopback issues
+resource "local_file" "kubespray_extra_vars" {
+  filename = "${path.module}/extra-vars.yml"
+  content  = <<-EOT
+    ---
+    # Explicit upstream DNS servers prevent CoreDNS CrashLoopBackOff from host loopback detection
+    upstream_dns_servers:
+      - 8.8.8.8
+      - 1.1.1.1
+
+    # Disable Kubespray host resolvconf management to avoid host <-> DNS forwarding loops
+    resolvconf_mode: none
   EOT
 }

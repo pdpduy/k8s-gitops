@@ -1,0 +1,8 @@
+---
+# Upstream DNS servers for CoreDNS and NodeLocalDNS to avoid loopback detection
+upstream_dns_servers:
+  - 8.8.8.8
+  - 1.1.1.1
+
+# Disable Kubespray's host resolvconf management to prevent circular DNS loops
+resolvconf_mode: none
