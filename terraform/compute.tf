@@ -36,8 +36,8 @@ resource "azurerm_linux_virtual_machine" "this" {
 
   source_image_reference {
     publisher = "Debian"
-    offer     = "debian-12"
-    sku       = "12-gen2"
+    offer     = "debian-13"
+    sku       = "13-gen2"
     version   = "latest"
   }
 
