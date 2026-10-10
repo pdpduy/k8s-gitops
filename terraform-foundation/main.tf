@@ -95,17 +95,17 @@ resource "azurerm_static_web_app" "interview_docs" {
 # 2. Create the DNS CNAME Record via Cloudflare
 resource "cloudflare_dns_record" "interview_docs_cname" {
   zone_id = var.cloudflare_zone_id
-  name    = "interview.lab"
+  name    = "interviewprep"
   content = azurerm_static_web_app.interview_docs.default_host_name
   type    = "CNAME"
-  proxied = false
-  ttl     = 120
+  proxied = true
+  ttl     = 1
 }
 
 # 3. Bind the Custom Domain to the Static Web App
 resource "azurerm_static_web_app_custom_domain" "interview_docs_domain" {
   static_web_app_id = azurerm_static_web_app.interview_docs.id
-  domain_name       = "interview.lab.nexusworkspace.cloud"
+  domain_name       = "interviewprep.nexusworkspace.cloud"
   validation_type   = "cname-delegation"
   
   # Tell Azure to wait for the sleep timer, not just the DNS record creation
